@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.authorities.dao.OpeuserDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.authorities.entity.Opeuser" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userName" column="user_name"  jdbcType="VARCHAR" />
+		<result property="passWord" column="pass_word"  jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+
+ <select id="findByUserName" parameterType="java.lang.String"  resultMap="testResult">
+   SELECT   *  FROM ope_user  WHERE user_name=#{username} 
+ </select>
+	
+	<select id="getAllUser"  parameterType="com.itmuch.cloud.authorities.entity.Opeuser"  resultMap="testResult">
+	select  * from   ope_user
+	where 
+    1=1
+    <if test="param.userName!=null and param.userName!=''">
+    and  user_name like #{param.userName}
+    
+    </if>
+	  ORDER BY  id  DESC  
+	   LIMIT #{param.page},#{param.size}
+	
+	</select>
+	<select id="getUserById" parameterType="java.lang.Integer"  resultMap="testResult">
+	select  * from   ope_user
+	where 
+    id=#{uid}
+	
+	</select>
+	<insert  id="insertUser"  parameterType="com.itmuch.cloud.authorities.entity.Opeuser">
+	insert into  ope_user(user_name,pass_word) values(#{param.userName},#{param.passWord});
+	
+	</insert>
+	<update id="updateUser"  parameterType="com.itmuch.cloud.authorities.entity.Opeuser">
+	update  
+	ope_user
+	set 
+	user_name=#{param.userName},
+	pass_word=#{param.passWord}
+	where 
+	id=#{param.id}
+	</update>
+	<delete id="deleteUser" parameterType="java.lang.Integer"> 
+	
+	delete from ope_user where id=#{uid}
+	</delete>
+	
+	<select id="getTotal" parameterType="com.itmuch.cloud.authorities.entity.Opeuser" resultType="java.lang.Integer">
+	
+	select  count(1)  from  ope_user
+	where
+	1=1
+	    <if test="param.userName!=null and param.userName!=''">
+    and  user_name like #{param.userName}
+    
+    </if>
+	</select>
+	<delete  id="deleteUserAndRole" parameterType="java.lang.Integer">
+	delete  from  ope_user_role   where user_id=#{uid}
+	</delete>
+	<insert  id="insertUserAndRole"  parameterType="java.lang.Integer">
+	insert into  ope_user_role (user_id,role_id) values(#{uid},#{rid})
+	
+	</insert>
+	
+	<select  id="findUserByNameAndPassWord" parameterType="java.lang.String" resultMap="testResult">
+	   SELECT   *  FROM ope_user  WHERE user_name=#{username} and pass_word=#{password}
+	
+	</select>
+	
+</mapper>

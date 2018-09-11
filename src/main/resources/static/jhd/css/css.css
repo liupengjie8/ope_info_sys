@@ -1,0 +1,48 @@
+ .headContent
+        {
+            width: 1200px;
+            height: 50px;
+            margin: 0 auto;
+            border-right: 1px solid #555555 ;
+        }
+        .headContentDiv
+        {
+            text-decoration: none;
+            display: block;
+            width: 199px;
+            height: 48px;
+            background: #cccccc;
+            border: 1px solid #000000 ;
+            border-right: none;
+            float: left;
+            text-align: center;
+            line-height: 48px;
+            cursor: pointer;
+        }
+        .headContentDiv:hover
+        {
+            background: #87FFB7;
+        }
+        .headContentClick
+        {
+            background: #4A92CD;
+        }
+        .contentList
+        {
+            width: 1000px;
+            overflow:hidden;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .contentDetail
+        {
+
+            width: 1000px;
+            overflow:hidden;
+            display: none;
+        }
+        .display-block
+        {
+            display: block;
+        }

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.OutHospitalEvaluateDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.OutHospitalEvaluate" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="ManagerId" column="manager_id"  jdbcType="INTEGER" />
+		<result property="templature" column="templature"  jdbcType="VARCHAR" />
+		<result property="pulse" column="pulse"  jdbcType="VARCHAR" />
+		<result property="breath" column="breath"  jdbcType="VARCHAR" />
+		<result property="lifeStatus" column="life_status"  jdbcType="VARCHAR" />
+		<result property="action" column="action"  jdbcType="VARCHAR" />
+		<result property="pain" column="pain"  jdbcType="INTEGER" />
+		<result property="vomit" column="vomit"  jdbcType="INTEGER" />
+		<result property="bleed" column="bleed"  jdbcType="INTEGER" />
+		<result property="outHospital" column="out_hospital"  jdbcType="INTEGER" />
+		<result property="evaluateName" column="evaluate_name"  jdbcType="VARCHAR" />
+		<result property="other" column="other"  jdbcType="VARCHAR" />
+							
+	</resultMap>
+	 <select  id="getOutHospitalByManngerId" resultMap="testResult"  parameterType="java.lang.Integer">
+	 select  * from  out_hospital_evaluate where manager_id=#{manId}
+	 </select>
+   <insert id="insertOutHospitalEvaluate" parameterType="com.itmuch.cloud.data.operationpermission.entity.OutHospitalEvaluate">
+    insert into  out_hospital_evaluate
+    (manager_id,templature,pulse,breath,life_status,action,pain,vomit,bleed,out_hospital,evaluate_name,other)
+   VALUES
+   (#{param.ManagerId},#{param.templature},#{param.pulse},#{param.breath},#{param.lifeStatus},#{param.action},#{param.pain},#{param.vomit},#{param.bleed},#{param.outHospital},#{param.evaluateName},#{param.other})
+   </insert>
+   <update id="updateOutHospitalEvaluate"  parameterType="com.itmuch.cloud.data.operationpermission.entity.OutHospitalEvaluate">
+   update 
+   out_hospital_evaluate
+   set 
+   templature=#{param.templature},
+   pulse=#{param.pulse},
+   breath=#{param.breath},
+   life_status=#{param.lifeStatus},
+   action=#{param.action},
+   pain=#{param.pain},
+   vomit=#{param.vomit},
+   bleed=#{param.bleed},
+   out_hospital=#{param.outHospital},
+   evaluate_name=#{param.evaluateName},
+   other=#{param.other}
+   where
+    manager_id=#{param.ManagerId}
+   
+   </update>
+   
+</mapper>

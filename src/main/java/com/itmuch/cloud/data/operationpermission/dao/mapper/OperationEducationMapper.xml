@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.OperationEducationDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.OperationEducation" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="oId" column="operation_id"  jdbcType="INTEGER" />
+		<result property="illGuid" column="ill_guide"  jdbcType="VARCHAR" />
+		<result property="medicineGuid" column="medicine_guide"  jdbcType="VARCHAR" />
+		<result property="foodGuid" column="food_guide"  jdbcType="VARCHAR" />
+		<result property="operationPlan" column="operation_plan"  jdbcType="VARCHAR" />
+				<result property="mindGuid" column="mind_guide"  jdbcType="VARCHAR" />
+		
+	 
+	</resultMap>
+	
+	<select  id="findOperationEducationById"  resultMap="testResult" parameterType="java.lang.Integer">
+	SELECT  *  FROM  operation_education where
+	operation_id=#{id}
+
+	</select>
+ 
+	<insert id="insertOperationEducation" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationEducation">
+	INSERT INTO operation_education (operation_id,ill_guide,medicine_guide,food_guide,mind_guide,operation_plan)
+  VALUES(#{param.oId},#{param.illGuid},#{param.medicineGuid},#{param.foodGuid},#{param.mindGuid},#{param.operationPlan})
+	</insert>
+	<delete id="deleteOperationEducationById"  parameterType="java.lang.Integer">
+	delete  from  operation_education  where id=#{id}
+	
+	</delete>
+	<update id="updateOperationEducation"  parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationEducation">
+	update 
+	operation_education
+	set
+	ill_guide=#{param.illGuid},
+	medicine_guide=#{param.medicineGuid},
+	food_guide=#{param.foodGuid},
+	mind_guide=#{param.mindGuid},
+	operation_plan=#{param.operationPlan}
+	where
+	operation_id=#{param.oId}
+	
+	
+	</update>
+  
+	
+	
+</mapper>

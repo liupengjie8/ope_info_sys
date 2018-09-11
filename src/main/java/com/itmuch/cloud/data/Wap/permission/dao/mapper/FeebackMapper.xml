@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.Wap.permission.dao.FeebackDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.Wap.permission.entity.Feeback" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="wapUserId" column="wap_user_id"  jdbcType="INTEGER" />
+		<result property="message" column="message"  jdbcType="VARCHAR" />
+       	<result property="submitDate" column="submit_date"  jdbcType="VARCHAR" />
+       
+	</resultMap>
+	
+
+ <select id="findMessageList"  parameterType="com.itmuch.cloud.data.Wap.permission.entity.Feeback" resultMap="testResult">
+   SELECT   *  FROM feeback 
+   where 
+   1=1
+   <if test="param.sDate!=null and param.sDate!=''">
+   	and submit_date between   #{param.sDate}  and  #{param.eDate}
+   
+   </if>
+    order  by submit_date desc
+     LIMIT #{param.page},#{param.size}
+ </select>
+
+ <select id="getTotal" parameterType="com.itmuch.cloud.data.Wap.permission.entity.Feeback" resultType="java.lang.Integer" >
+ 
+ select  count(1)  from  feeback 
+  where 
+   1=1
+   <if test="param.sDate!=null and param.sDate!=''">
+   	and submit_date between   #{param.sDate}  and  #{param.eDate}
+   
+   </if>
+ </select>
+ 
+ 
+  <insert id="insertMessage" parameterType="com.itmuch.cloud.data.Wap.permission.entity.Feeback">
+  insert into feeback(wap_user_id,message,submit_date)
+  values(#{param.wapUserId},#{param.message},SYSDATE());
+  </insert>
+
+	
+	
+</mapper>

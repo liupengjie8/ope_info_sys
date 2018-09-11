@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.OperationFileDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.OperationFile" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="fileName" column="file_name"  jdbcType="VARCHAR" />
+		<result property="fileUrl" column="file_url"  jdbcType="VARCHAR" />
+		<result property="fileType" column="file_type"  jdbcType="INTEGER" />
+		<result property="operationId" column="operation_id"  jdbcType="INTEGER" />
+
+	     
+	</resultMap>
+	<insert id="insertOperationFile" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationFile">
+  INSERT INTO operation_file
+  (file_name,file_url,file_type,operation_id)
+  VALUES(
+  #{param.fileName},#{param.fileUrl},#{param.fileType},#{param.operationId}
+)
+	</insert>
+	<select id="getOperationFileByOperationId" resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationFile">
+	
+	select  * from operation_file where  operation_id=#{param.operationId} and  file_type=#{param.fileType}
+	
+	</select>
+	<select id="getOperationFileByOperation" resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationFile">
+	
+	select  * from operation_file where  operation_id=#{param.operationId}
+	
+	</select>
+    <select id="getOperationFileById" resultMap="testResult" parameterType="java.lang.Integer">
+	
+	select  * from operation_file where  id=#{id}
+	
+	</select>
+	
+	<delete id="deleteOperationFileByOperationId"  parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationFile">
+	
+	delete  from  operation_file where  operation_id=#{param.operationId} 
+	</delete>
+		<delete id="deleteOperationFileById"  parameterType="java.lang.Integer">
+	
+	delete  from  operation_file where  id=#{id}
+	</delete>	
+		<delete id="deleteOperationFileByUrl"  parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationFile">
+	
+	delete  from  operation_file where  file_url=#{param.fileUrl} and  operation_id=#{param.operationId} and  file_type=#{param.fileType}
+	</delete>	
+	
+</mapper>

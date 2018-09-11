@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.authorities.dao.OperoleDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.authorities.entity.Operole" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="name" column="name"  jdbcType="VARCHAR" />
+		<result property="descript" column="descript"  jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+
+ <select id="getAllRoleByName" parameterType="com.itmuch.cloud.authorities.entity.Operole"  resultMap="testResult">
+            
+  SELECT  * FROM  ope_role       
+  where
+  1=1
+  <if test="param.name!=null and param.name!=''">
+  and name like  #{param.name}
+  
+  </if>
+      ORDER BY  id  DESC  
+	   LIMIT #{param.page},#{param.size}
+    
+ </select>
+	
+	<select  id="findAllRole"  resultMap="testResult">
+	SELECT  * FROM  ope_role    order by id  desc
+	
+	</select>
+	<insert id="insertRole" parameterType="com.itmuch.cloud.authorities.entity.Operole" >
+	insert  into ope_role(name,descript) values(#{param.name},#{param.descript})
+	
+	</insert>
+	<update id="updateRole" parameterType="com.itmuch.cloud.authorities.entity.Operole">
+	  update 
+	  ope_role
+	  set
+	  name=#{param.name},
+	  descript=#{param.descript}
+	  where
+	  id=#{param.id}
+	  
+	</update>
+	
+	<delete id="deleteRoleById" parameterType="java.lang.Integer">
+	  
+	 delete from   ope_role where id=#{rid}
+	</delete>
+	<select id="getRoleById" parameterType="java.lang.Integer" resultMap="testResult">
+	
+	select  * from ope_role  where id=#{rid}
+	</select>
+	
+	<select id="getRoleTotal" resultType="java.lang.Integer"  parameterType="com.itmuch.cloud.authorities.entity.Operole">
+	
+	select count(1) from   ope_role  
+	where
+	1=1
+	<if test="param.name!=null and param.name!=''">
+   and  name like #{param.name}
+   </if>
+	
+	</select>
+	<insert id="insertRoleAndPermission"  parameterType="java.lang.Integer">
+	
+	 INSERT  INTO ope_role_permission (role_id,permission_id) VALUES(#{rid},#{pid})
+	
+	</insert>
+	<delete  id="deleteRoleAndPermissionByRid" parameterType="java.lang.Integer">
+	delete  from  ope_role_permission where role_id=#{rid}
+	
+	</delete>
+	
+	<select id="getRoleAndUserByUid"  resultMap="testResult" parameterType="java.lang.Integer">
+	
+	  SELECT  
+      r.*
+     FROM 
+     ope_user_role  ur
+     LEFT JOIN ope_role r
+     ON ur.`role_id`=r.id
+     WHERE 
+     ur.`user_id`= #{uid}
+	</select>
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.LeaveMessageDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.LeaveMessage" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="evaluateId" column="evaluate_id"  jdbcType="INTEGER" />
+		<result property="messageDate" column="message_date"  jdbcType="VARCHAR" />
+		<result property="message" column="message"  jdbcType="VARCHAR" />
+	
+	</resultMap>
+	
+	<select  id="findLeaveMessageByEvaluateId" resultMap="testResult" parameterType="java.lang.Integer">
+  SELECT  l.* FROM  leave_message l LEFT JOIN  patient_evaluate p
+   ON  l.evaluate_id=p.id 
+   WHERE p.id=#{eId} and l.read_state=#{state}  ORDER BY l.id  DESC
+   	</select>
+ 	<select  id="findLeaveMessage" resultMap="testResult" parameterType="java.lang.Integer">
+  SELECT  l.* FROM  leave_message l LEFT JOIN  patient_evaluate p
+   ON  l.evaluate_id=p.id 
+   WHERE p.id=#{eId}   ORDER BY l.id  DESC
+   	</select>
+	<insert id="insertLeaveMessage" parameterType="com.itmuch.cloud.data.operationpermission.entity.LeaveMessage">
+	insert into leave_message(evaluate_id,message_date,message)values(#{param.evaluateId},sysdate(),#{param.message})
+	
+	</insert>
+  <select id="getLeaveMessageByMessage"  resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.LeaveMessage">
+  select * from  leave_message where message=#{param.message} and evaluate_id=#{param.evaluateId}
+  </select>
+	<update id="updateMessageByMessage" parameterType="java.lang.String">
+	update
+	leave_message
+	set 
+	message_date=sysdate()
+	where message=#{message}
+	</update>
+ 	<select  id="getReadCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  SELECT  count(1) FROM  leave_message l LEFT JOIN  patient_evaluate p
+   ON  l.evaluate_id=p.id 
+   WHERE p.id=#{eId} and l.read_state=0  ORDER BY l.id  DESC
+   	</select>
+   	<update id="updateReadState" parameterType="java.lang.Integer">
+   	UPDATE
+	 leave_message l 
+	 LEFT JOIN  patient_evaluate p
+   ON  l.evaluate_id=p.id 
+	SET 
+	l.read_state=1
+	WHERE  p.id=#{eId}   AND l.read_state=0
+   	
+   	
+   	</update>
+   	
+   	<select id="getMessageById"  resultMap="testResult" parameterType="java.lang.Integer">
+   	
+   	select  * from  leave_message  where 
+   	id=#{mId}
+   	</select>
+</mapper>

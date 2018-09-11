@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.OperationManagerDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.OperationManager" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="chiefDoctor" column="chief_doctor"  jdbcType="VARCHAR" />
+		<result property="operationName" column="operation_name"  jdbcType="VARCHAR" />
+		<result property="patientName" column="patient_name"  jdbcType="VARCHAR" />
+		<result property="operationDate" column="operation_date"  jdbcType="VARCHAR" />
+		<result property="startDate" column="start_time"  jdbcType="VARCHAR" />
+		<result property="endDate" column="end_time"  jdbcType="VARCHAR" />
+		<result property="operationId" column="operation_id"  jdbcType="INTEGER" />
+		<result property="patientId" column="patient_id"  jdbcType="INTEGER" />
+				<result property="operationRoom" column="operation_room"  jdbcType="VARCHAR" />
+				<result property="evaluateState" column="evaluate_state"  jdbcType="INTEGER" />
+						<result property="evaluateTime" column="evaluate_time"  jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+	<select  id="findOperationManagerByName"  resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationManager">
+	SELECT  *  FROM  operation_manager where
+	1=1
+	<if  test="param.sDate!=null and param.eDate!=null">
+	and operation_date  between   #{param.sDate}  and  #{param.eDate}
+	</if>
+	<if test="param.chiefDoctor!=null and param.chiefDoctor!=''">
+	 and  chief_doctor like #{param.chiefDoctor}
+	  </if>
+	  <if test="param.operationName!=null and param.operationName!=''">
+	 and  operation_name like #{param.operationName}
+	  </if>
+	  <if test="param.patientName!=null and param.patientName!=''">
+	 and  patient_name like #{param.patientName}
+	  </if>
+	   ORDER BY  id  DESC  
+	   LIMIT #{param.page},#{param.size}
+
+	</select>
+   <select  id="getTotal"  resultType="java.lang.Integer" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationManager">
+	SELECT  count(1)  FROM  operation_manager where
+	1=1
+	<if  test="param.sDate!=null and param.eDate!=null">
+	and operation_date  between   #{param.sDate}  and  #{param.eDate}
+	</if>
+	
+	<if test="param.chiefDoctor!=null and param.chiefDoctor!=''">
+	 and  chief_doctor like #{param.chiefDoctor}
+	  </if>
+	  <if test="param.operationName!=null and param.operationName!=''">
+	 and  operation_name like #{param.operationName}
+	  </if>
+	  <if test="param.patientName!=null and param.patientName!=''">
+	 and  patient_name like #{param.patientName}
+	  </if>
+	</select>
+	<select id="getOperationManagerById" resultMap="testResult" parameterType="java.lang.Integer">
+	select  * from   operation_manager where id=#{id}
+	</select>
+	<select id="getOperationManagerByPatientId" resultMap="testResult" parameterType="java.lang.String">
+	select  * from   operation_manager where patient_id=#{patientId}
+	</select>
+	
+	<select id="getOperationManagerByEvaluateState" resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationManager">
+	
+	 select  * from  operation_manager  
+	 where
+	 evaluate_state=#{param.evaluateState}
+	 <if test="param.operationName!=null and param.operationName!=''">
+	 and  operation_name like #{param.operationName}
+	  </if>
+	 <if test="param.patientName!=null and param.patientName!=''">
+	 and  patient_name like #{param.patientName}
+	  </if>
+	
+	   order by operation_date desc
+	      LIMIT #{param.page},#{param.size} 
+	</select>
+	<update id="updateEvaluateState"  parameterType="com.itmuch.cloud.data.operationpermission.entity.OperationManager">
+	update operation_manager  set evaluate_state=#{param.evaluateState},evaluate_time=SYSDATE()
+	where
+	id=#{param.id}
+	</update>
+	
+	
+</mapper>

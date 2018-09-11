@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.operationpermission.dao.PatientEvaluateDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.operationpermission.entity.PatientEvaluate" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="managerId" column="manager_id"  jdbcType="INTEGER" />
+		<result property="evaluateTime" column="evaluate_time"  jdbcType="VARCHAR" />
+		<result property="evaluateUser" column="evaluate_user"  jdbcType="INTEGER" />
+		<result property="evaluateUserName" column="evaluate_user_name"  jdbcType="VARCHAR" />
+		<result property="evaluateUserType" column="evaluate_user_type"  jdbcType="INTEGER" />
+				<result property="operationType" column="operation_type"  jdbcType="INTEGER" />
+				<result property="operationName" column="operation_name"  jdbcType="VARCHAR" />
+				<result property="patientName" column="patient_name"  jdbcType="VARCHAR" />
+				<result property="age" column="age"  jdbcType="INTEGER" />
+		
+	 
+	</resultMap>
+	
+	<select  id="findPatinetEvaluate"  resultMap="testResult" parameterType="com.itmuch.cloud.data.operationpermission.entity.PatientEvaluate">
+	SELECT o.id manager_id,p.id ,o.`patient_name`,o.`operation_name`,o.`age`,p.evaluate_time,p.evaluate_user,p.evaluate_user_type,p.operation_type FROM `operation_manager` o LEFT JOIN `patient_evaluate` p
+      ON o.`id`=p.`manager_id`
+      where
+      1=1
+       <if test="param.patientName!=null and param.patientName!=''">
+    and  operation_name like #{param.patientName}
+    
+    </if>
+        <if test="param.operationType!=null and param.operationType!=3">
+    and  operation_type = #{param.operationType}
+    
+    </if>
+      ORDER  BY  o.id DESC
+       LIMIT #{param.page},#{param.size}
+
+	</select>
+ 
+	<select id="getTotal"  resultType="java.lang.Integer" parameterType="com.itmuch.cloud.data.operationpermission.entity.PatientEvaluate">
+	
+	SELECT count(1) FROM `operation_manager` o LEFT JOIN `patient_evaluate` p
+      ON o.`id`=p.`manager_id`
+      where
+      1=1
+       <if test="param.patientName!=null and param.patientName!=''">
+    and  operation_name like #{param.patientName}
+    
+    </if>
+        <if test="param.operationType!=null and param.operationType!=3">
+    and  operation_type = #{param.operationType}
+    
+    </if>
+     
+	
+	</select>
+  <select id="getPatinetEvaluateById" resultMap="testResult" parameterType="java.lang.Integer">
+  
+  SELECT o.id manager_id,p.id ,o.`patient_name`,o.`operation_name`,o.`age`,p.operation_type FROM `operation_manager` o LEFT JOIN `patient_evaluate` p
+      ON o.`id`=p.`manager_id`
+      where
+      o.id=#{oId}
+  </select>
+	<insert id="insertPatinetEvaluate" parameterType="com.itmuch.cloud.data.operationpermission.entity.PatientEvaluate">
+	
+	  INSERT INTO  patient_evaluate(manager_id,evaluate_time,evaluate_user,evaluate_user_type,operation_type)
+  VALUES(#{param.managerId},SYSDATE(),#{param.evaluateUser},#{param.evaluateUserType},#{param.operationType})
+	</insert>
+	<update id="updatePatinetEvaluate" parameterType="com.itmuch.cloud.data.operationpermission.entity.PatientEvaluate">
+	update 
+	patient_evaluate
+	set
+	operation_type=#{param.operationType}
+	where 
+	id=#{param.id}
+	
+	
+	</update>
+</mapper>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.itmuch.cloud.data.Wap.permission.dao.WapUserDao">
+	<!-- 配置实体映射 -->
+	<!-- 参数type 为实体类的全限定类名 -->
+	<resultMap type="com.itmuch.cloud.data.Wap.permission.entity.WapUser" id="testResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userName" column="user_name"  jdbcType="VARCHAR" />
+		<result property="passWord" column="pass_word"  jdbcType="VARCHAR" />
+		<result property="registerSource" column="register_source"  jdbcType="INTEGER" />
+		<result property="isQua" column="is_qualification"  jdbcType="INTEGER" />
+		<result property="reallyName" column="really_name"  jdbcType="VARCHAR" />
+		<result property="telphone" column="tel_phone"  jdbcType="VARCHAR" />
+		<result property="patientId" column="patient_id"  jdbcType="VARCHAR" />
+				<result property="openId" column="open_id"  jdbcType="VARCHAR" />
+						<result property="headimgurl" column="headimgurl"  jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+
+ <select id="findByUserName" parameterType="java.lang.String"  resultMap="testResult">
+   SELECT   *  FROM wap_user  WHERE user_name=#{username} 
+ </select>
+	<select id="findByOpenId" parameterType="java.lang.String"  resultMap="testResult">
+   SELECT   *  FROM wap_user  WHERE open_id=#{openId}
+ </select>
+ 	<select id="findById" parameterType="java.lang.Integer"  resultMap="testResult">
+   SELECT   *  FROM wap_user  WHERE id=#{wapId}
+ </select>
+ 
+  <insert id="insertWapUser" parameterType="com.itmuch.cloud.data.Wap.permission.entity.WapUser">
+  insert into wap_user(user_name,pass_word,register_source,is_qualification,open_id,headimgurl)
+  values(#{param.userName},#{param.passWord},#{param.registerSource},#{param.isQua},#{param.openId},#{param.headimgurl});
+  </insert>
+	<update  id="updateUserBasicMessage"  parameterType="com.itmuch.cloud.data.Wap.permission.entity.WapUser">
+	update 
+	wap_user
+	set
+	really_name=#{param.reallyName},
+	is_qualification=1,
+	tel_phone=#{param.telphone}
+	where 
+	id=#{param.id}
+	
+	
+	</update>
+	
+
+	
+</mapper>

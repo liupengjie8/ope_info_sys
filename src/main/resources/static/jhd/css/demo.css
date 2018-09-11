@@ -1,0 +1,41 @@
+@charset "UTF-8";
+*{margin:0;padding:0}
+html{font-size:10px;font-family:sans-serif}
+body{line-height:1.333;font-size:12px}
+h2{font-size:100%;font-family:sans-serif}
+li{list-style:none}
+a:link,a:visited{text-decoration:none; }
+
+
+.head-v3{position:relative;z-index:100;min-width:1000px}
+.head-v3 .navigation-inner{margin:0 auto;width:980px;position:relative}
+.navigation-up{height:60px;background:#2f6291;position:absolute/*fixed*/;width:100%;z-index:9999}
+.navigation-up .nav{margin-left:270px;float:left;_margin-left:10px}
+.navigation-up .nav ul{float:left}
+.navigation-up .nav li{float:left;font:normal 16px/59px "microsoft yahei";color:#fff}
+.navigation-up .nav .nav-up-selected{background:#344157}
+.navigation-up .nav .nav-up-selected-inpage{background:#2f6291}
+.navigation-up .nav li h2{font-weight:normal;padding:0;margin:0}
+.navigation-up .nav li h2 a{padding:0 25px;color:#fff;display:inline-block;height:60px;font-family:"microsoft yahei"}
+
+
+
+.navigation-down{position:absolute;top:60px;left:0px;width:100%}
+.navigation-down .nav-down-menu{width:100%;margin:0;background:#344157;position:absolute;top:0px;z-index:10000}
+.navigation-down .nav-down-menu .navigation-down-inner{margin:auto;width:1200px;position:relative}
+.navigation-down .nav-down-menu dl{float:left;margin:18px 80px 18px 0}
+.navigation-down .menu-1 dl{margin:20px 80px 25px 0}
+.navigation-down .menu-1 dt{font:normal 16px "microsoft yahei";color:#61789e;padding-bottom:10px;border-bottom:1px solid #61789e;margin-bottom:10px}
+.navigation-down .menu-1 dd a{color:#fff;font:normal 14px/30px "microsoft yahei"}
+.navigation-down .menu-1 dd a:hover{color:#60aff6}
+
+.navigation-down .menu-2 dl{margin:20px 80px 25px 0}
+.navigation-down .menu-2 dt{font:normal 16px "microsoft yahei";color:#61789e;padding-bottom:10px;border-bottom:1px solid #61789e;margin-bottom:10px}
+.navigation-down .menu-2 dd a{color:#fff;font:normal 14px/30px "microsoft yahei"}
+.navigation-down .menu-2 dd a:hover{color:#60aff6}
+
+.navigation-down .menu-3 dl{margin:20px 80px 25px 0}
+.navigation-down .menu-3 dt{font:normal 16px "microsoft yahei";color:#61789e;padding-bottom:10px;border-bottom:1px solid #61789e;margin-bottom:10px}
+.navigation-down .menu-3 dd a{color:#fff;font:normal 14px/30px "microsoft yahei"}
+.navigation-down .menu-3 dd a:hover{color:#60aff6}
+
